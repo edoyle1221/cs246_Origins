@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -48,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void createClick(View v) {
         //Executes a new thread for CreateFileTask
-        new CreateFile().execute(getFilesDir() + "numbers.txt"); }
+        new CreateFile().execute(getFilesDir() + "numbers.txt");
+    }
 
     /**
      * used for an instance of a CreateFile thread
@@ -82,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                     Thread.sleep(250);
                     publishProgress(i * 10);
                 }
-                fout.close();
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
      * @see AsyncTask
      */
     private class LoadFile extends AsyncTask<String, Integer, Void> {
-        ArrayList<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
 
         /**
          * sets the progressbar and numerical display to 0
@@ -147,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
          protected Void doInBackground(String... parameters) {
             try (Scanner fin = new Scanner(new File(parameters[0]))){
-                System.out.println(fin.hasNextInt());
                 while (fin.hasNextInt()) {
                     list.add(fin.nextInt());
                     Thread.sleep(250);
